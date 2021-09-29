@@ -1,5 +1,7 @@
 package io.github.jassonluizjr.clientes.rest;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -27,16 +29,17 @@ public class ClienteController {
 		this.repository = repository;
 	}
 	
+	// Cria usuário: http:localhost:8081/api/clientes
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
-	public Cliente savar(@RequestBody Cliente cliente) {
+	public Cliente savar(@RequestBody @Valid Cliente cliente) {
 		return repository.save(cliente);
 	}
 	
 	@GetMapping("{id}")
 	public Cliente findById(@PathVariable Integer id) {
 		return repository.findById(id)
-				.orElseThrow( () -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+				.orElseThrow( () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Cliente não encontrado!"));
 	}
 	
 	@DeleteMapping("{id}")
@@ -47,18 +50,18 @@ public class ClienteController {
 					repository.delete(cliente);
 					return Void.TYPE;
 				})
-				.orElseThrow( () -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+				.orElseThrow( () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Cliente não encontrado!"));
 	}
 	
 	@PutMapping("{id}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
-	public void atualiza(@PathVariable Integer id , @RequestBody Cliente clienteAtualizado) {
+	public void atualiza(@PathVariable Integer id , @RequestBody @Valid Cliente clienteAtualizado) {
 		repository.findById(id)
 					.map(cliente -> {
 						cliente.setNome(clienteAtualizado.getNome());
 						cliente.setCpf(clienteAtualizado.getCpf());
 						return repository.save(cliente);
 					})
-					.orElseThrow( () -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+					.orElseThrow( () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Cliente não encontrado!"));
 	}
 }
