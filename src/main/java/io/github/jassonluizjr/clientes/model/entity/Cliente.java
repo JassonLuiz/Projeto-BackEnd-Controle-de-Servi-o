@@ -1,4 +1,4 @@
-package io.github.jassonluizjr.clientes.model;
+package io.github.jassonluizjr.clientes.model.entity;
 
 import java.time.LocalDate;
 
