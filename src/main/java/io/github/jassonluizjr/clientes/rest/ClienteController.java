@@ -23,7 +23,6 @@ import io.github.jassonluizjr.clientes.model.repository.ClienteRepository;
 
 @RestController
 @RequestMapping("/api/clientes")
-@CrossOrigin("http://localhost:4200")
 public class ClienteController {
 
 	public final ClienteRepository repository;
