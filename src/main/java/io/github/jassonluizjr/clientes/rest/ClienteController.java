@@ -40,7 +40,7 @@ public class ClienteController {
 	// Cria usuário: http:localhost:8081/api/clientes
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
-	public Cliente savar(@RequestBody @Valid Cliente cliente) {
+	public Cliente salvar(@RequestBody @Valid Cliente cliente) {
 		return repository.save(cliente);
 	}
 	
